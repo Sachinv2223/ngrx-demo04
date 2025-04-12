@@ -14,7 +14,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
 
     // Provide the global store
-    provideStore({ userFeatureKey: userReducer }), // We'll add reducers later using provideState
+    provideStore({ [userFeatureKey]: userReducer }), // We'll add reducers later using provideState
 
     // Provide effects
     provideEffects([UserEffects]), // We'll add effects later using provideEffects
