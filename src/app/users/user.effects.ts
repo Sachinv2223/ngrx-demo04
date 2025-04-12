@@ -7,7 +7,7 @@ import { UserActions } from './user.actions';
 @Injectable()
 export class UserEffects {
 
-    private actions$:Actions = inject(Actions); // Inject Actions service (for dispatching actions)
+    private actions$: Actions = inject(Actions); // Inject Actions service (for dispatching actions)
 
     // Effect to handle loading users
     loadUsers$ = createEffect(() =>
@@ -29,11 +29,7 @@ export class UserEffects {
             switchMap(({ user }) => // Use switchMap or mergeMap based on desired behavior
                 this.userService.addUser(user).pipe(
                     map(newUser => UserActions.addUserSuccess({ user: newUser })), // On success, dispatch success action
-                    //   catchError(error => of(UserActions.addUserFailure({ error: error.message }))) // On error, dispatch failure action
-                    catchError(error => {
-                        console.error('Error loading users:', error); // Log the full error for debugging
-                        return of(UserActions.loadUsersFailure({ error: 'Failed to load users.' }));
-                    })
+                    catchError(error => of(UserActions.addUserFailure({ error: error.message }))) // On error, dispatch failure action
                 )
             )
         )
