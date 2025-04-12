@@ -1,0 +1,43 @@
+<h2>User Management (NgRx Global Store + Entity + Effects + Facade)</h2>
+
+<div *ngIf="userFacade?.loading$ | async">Loading users...</div>
+
+<div *ngIf="userFacade?.error$ | async as error" style="color: red;">
+  Error: {{ error }}
+</div>
+
+<div *ngIf="(userFacade?.allUsers$ | async)?.length === 0 && !(userFacade?.loading$ | async)">
+    No users found.
+</div>
+
+<ul *ngIf="(userFacade?.allUsers$ | async)?.length != 0">
+  <li *ngFor="let user of (userFacade?.allUsers$ | async)">
+    {{ user.name }} ({{ user.email }})
+  </li>
+</ul>
+<p>Total Users: {{ userFacade.totalUsers$ | async }}</p>
+
+<hr>
+
+<h3>Add New User</h3>
+<form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name: </label>
+    <input id="name" type="text" formControlName="name">
+    <div *ngIf="addUserForm.controls['name'].invalid && (addUserForm.controls['name'].dirty || addUserForm.controls['name'].touched)" style="color: red; font-size: 0.8em;">
+      Name is required.
+    </div>
+  </div>
+  <div>
+    <label for="email">Email: </label>
+    <input id="email" type="email" formControlName="email">
+     <div *ngIf="addUserForm.controls['email'].invalid && (addUserForm.controls['email'].dirty || addUserForm.controls['email'].touched)" style="color: red; font-size: 0.8em;">
+        <span *ngIf="addUserForm.controls['email'].errors?.['required']">Email is required.</span>
+        <span *ngIf="addUserForm.controls['email'].errors?.['email']">Invalid email format.</span>
+    </div>
+  </div>
+  <button type="submit" [disabled]="addUserForm.invalid || (userFacade.loading$ | async)">
+    Add User
+  </button>
+</form>
+

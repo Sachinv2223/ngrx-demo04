@@ -1,0 +1,11 @@
+<h2>Local Counter (NgRx Component Store)</h2>
+
+<div *ngIf="counterStore.viewModel$ | async as vm">
+    <p>Current Count: {{ vm.count }}</p>
+    <p>Total Updates: {{ vm.updates }}</p>
+</div>
+
+<button (click)="increment()">Increment</button>
+<button (click)="decrement()">Decrement</button>
+<button (click)="reset()">Reset</button>
+<button (click)="delayedIncrement()">Increment +5 (Delayed)</button>
