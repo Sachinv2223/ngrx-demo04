@@ -10,7 +10,7 @@
     No users found.
 </div>
 
-<ul *ngIf="(userFacade?.allUsers$ | async)?.length != 0">
+<ul *ngIf="(userFacade?.allUsers$ | async) && (userFacade?.allUsers$ | async)?.length !== 0">
   <li *ngFor="let user of (userFacade?.allUsers$ | async)">
     {{ user.name }} ({{ user.email }})
   </li>
